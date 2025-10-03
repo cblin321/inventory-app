@@ -1,0 +1,39 @@
+10/2/25
+
+    GET course info
+        id
+        number
+        name
+
+    GET course subjects:
+        subject_name
+
+    GET course offerings:
+        offering_id
+        year
+        semester
+        instructor_id
+        capacity
+        num_enrolled
+
+    ~~GET instructors:
+        rating
+        name
+        id~~
+
+    GET course subject:
+        subject name
+
+    GET search products
+
+    UPDATE course
+
+    POST add course
+
+    DELETE course
+
+    DELETE offering
+
+
+
+    
