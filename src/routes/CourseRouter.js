@@ -1,9 +1,11 @@
 const { Router } = require("express")
 
 const courseRouter = Router()
+const coursesController = require("../controllers/CoursesController")
 
 courseRouter.get("./", async (req, res) => {
-        res.render("./courses")
+        const allCourses = await coursesController.getAllCourses()
+        res.render("./courses", allCourses)
     }
 )
 
