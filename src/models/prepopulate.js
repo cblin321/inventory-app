@@ -1,22 +1,21 @@
 const pool = require("../models/Pool")
 const schema = `
-    CREATE TABLE courses (
+    CREATE TABLE IF NOT EXISTS courses (
         course_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         course_number INTEGER,
         course_name TEXT
     );
 
-    CREATE TABLE courses_belong_to_subjects (
-        course_id REFERENCES courses(course_id) ON DELETE CASCADE,
-        subject_name REFERENCES subjects(subject_name) ON DELETE CASCADE
-
-    );
-
-    CREATE TABLE subjects (
+    CREATE TABLE IF NOT EXISTS subjects (
         subject_name TEXT PRIMARY KEY
     );
 
-    CREATE TABLE offerings (
+    CREATE TABLE IF NOT EXISTS courses_belong_to_subjects (
+        course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE,
+        subject_name TEXT REFERENCES subjects(subject_name) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS offerings (
         offering_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         offering_time_start TIME,
         offering_time_end TIME,
@@ -27,13 +26,13 @@ const schema = `
         course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE
     );
 
-    CREATE TABLE professors (
-        prof_id PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    CREATE TABLE IF NOT EXISTS professors (
+        prof_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         rating REAL,
         name TEXT
     );
 
-    CREATE TABLE professors_teach_offerings (
+    CREATE TABLE IF NOT EXISTS professors_teach_offerings (
         prof_id INTEGER REFERENCES professors(prof_id),
         offering_id INTEGER REFERENCES offerings(offering_id)
     );
@@ -155,13 +154,17 @@ function listFromRows(rows, col) {
 
 async function main() {
     const pool = require("./Pool")
+    const initTables = await pool.query(schema)
     const courseQuery = await pool.query(courseSQL)
     const courseId = listFromRows(courseQuery)
-    const subjectQuery = await pool.query(subjectSQL)
-    const subjectId = listFromRows(subjectQuery)
-    const offeringQuery = await pool.query(offeringSQL, [courseId])
-    const offeringId = listFromRows(offeringQuery)
-    const profQuery = await pool.query(profSQL)
-    const profId = listFromRows(profQuery)
-    const relationshipQuery = await pool.query(courseSQL)
+    console.log(courseId)
+    // const subjectQuery = await pool.query(subjectSQL)
+    // const subjectId = listFromRows(subjectQuery)
+    // const offeringQuery = await pool.query(offeringSQL, [courseId])
+    // const offeringId = listFromRows(offeringQuery)
+    // const profQuery = await pool.query(profSQL)
+    // const profId = listFromRows(profQuery)
+    // const relationshipQuery = await pool.query(courseSQL, [])
 }
+
+main()
