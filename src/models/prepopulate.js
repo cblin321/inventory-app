@@ -148,15 +148,16 @@ const subjectSQL = `
         'COMPUTER SCIENCE',
     );
 `
+
 function listFromRows(rows, col) {
-    return rows.map(row => row.col)
+    return rows.map(row => row[col])
 }
 
 async function main() {
     const pool = require("./Pool")
     const initTables = await pool.query(schema)
     const courseQuery = await pool.query(courseSQL)
-    const courseId = listFromRows(courseQuery)
+    const courseId = listFromRows(courseQuery.rows, "course_id")
     console.log(courseId)
     // const subjectQuery = await pool.query(subjectSQL)
     // const subjectId = listFromRows(subjectQuery)
