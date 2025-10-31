@@ -2,7 +2,7 @@ const pool = require("../models/Pool")
 const schema = `
     CREATE TABLE IF NOT EXISTS courses (
         course_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        course_number INTEGER,
+        course_number TEXT,
         course_name TEXT
     );
 
@@ -45,11 +45,11 @@ const courseSQL = `
     ) 
     VALUES 
     (
-        620,
+        'CS 620',
         'Capstone Project'
     ),
     (
-        101,
+        'CS 101',
         'Programming I' 
     )
     RETURNING course_id;

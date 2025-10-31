@@ -1,5 +1,7 @@
+const queries = require("../models/OfferingsQueries")
 async function getCourseOfferings(req, res) {
-
+   const id = req.params["id"] 
+   queries.getCourseOfferingsQuery(id) 
 }
 
 async function deleteCourseOfferings(req, res) {
