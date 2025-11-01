@@ -1,5 +1,6 @@
-async function getCourseOfferings(req, res) {
-
+const offeringsQueries = require("../models/OfferingsQueries")
+async function getCourseOfferings(course) {
+    await offeringsQueries.getOfferings()
 }
 
 async function deleteCourseOfferings(req, res) {

@@ -34,6 +34,9 @@
 
     DELETE offering
 
-
+10/7/25
+    many professors teach many offerings
+    one course has many offerings
+    one course belongs to many subjects
 
     

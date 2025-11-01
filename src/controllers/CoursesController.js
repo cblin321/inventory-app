@@ -1,7 +1,12 @@
-const queries = 
+const queries = require("../models/CourseQueries")
 async function getAllCourses(req, res) {
+    const getAllCoursesResult = await queries.getAllCoursesQuery()
+    return getAllCoursesResult
+}
 
-    res.send(queries)
+async function getOne(id) {
+    const getOneQuery = await queries.getOneQuery(id) 
+    return getOneQuery
 }
 
 async function deleteCourse(req, res) {
@@ -18,5 +23,6 @@ async function updateCourse(req, res) {
 }
 
 module.exports = {
-    getAllCourses
+    getAllCourses,
+    getOne
 }

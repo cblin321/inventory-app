@@ -3,6 +3,7 @@ const path = require("path")
 
 const app = express()
 const indexRouter = require("./routes/IndexRouter")
+const courseRouter = require("./routes/CourseRouter")
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -15,3 +16,4 @@ app.listen(3000, (err) => {
 })
 
 app.use("/", indexRouter)
+app.use("/courses", courseRouter)

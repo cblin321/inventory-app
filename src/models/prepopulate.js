@@ -11,8 +11,8 @@ const schema = `
     );
 
     CREATE TABLE IF NOT EXISTS courses_belong_to_subjects (
-        course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE,
-        subject_name TEXT REFERENCES subjects(subject_name) ON DELETE CASCADE
+        course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
+        subject_name TEXT REFERENCES subjects(subject_name) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
     CREATE TABLE IF NOT EXISTS offerings (
@@ -23,7 +23,7 @@ const schema = `
         semester TEXT,
         capacity INTEGER,
         num_enrolled INTEGER,
-        course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE
+        course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
     CREATE TABLE IF NOT EXISTS professors (
@@ -67,14 +67,14 @@ const profSQL = `
     (
         3.2,
         'Meena Carolina'
-    )
+    ),
     (
         2.5,
         'Bi Li'
     )
     RETURNING prof_id;
 `
-const relationshipSQL = `
+const profOfferingsRelationSQL = `
     INSERT INTO professors_teach_offerings (
         prof_id,
         offering_id
@@ -84,17 +84,19 @@ const relationshipSQL = `
         $1,
         $2
     );
-
+`
+const courseSubjectRelationSQL = `
     INSERT INTO courses_belong_to_subjects (
         course_id,
         subject_name
     )
     VALUES
     (
-        $3,
-        $4
+        $1,
+        $2
     );
-    `
+`
+
 const offeringSQL = `
     INSERT INTO offerings (
         offering_time_start,
@@ -139,14 +141,12 @@ const offeringSQL = `
 `
 const subjectSQL = `
     INSERT INTO subjects (
-        subject_name,
+        subject_name
     )
     VALUES
-    (
-        'MATH',
-        'PHYSICS',
-        'COMPUTER SCIENCE',
-    );
+        ('MATH'),
+        ('PHYSICS'),
+        ('COMPUTER SCIENCE');
 `
 
 function listFromRows(rows, col) {
@@ -158,14 +158,21 @@ async function main() {
     const initTables = await pool.query(schema)
     const courseQuery = await pool.query(courseSQL)
     const courseId = listFromRows(courseQuery.rows, "course_id")
-    console.log(courseId)
-    // const subjectQuery = await pool.query(subjectSQL)
-    // const subjectId = listFromRows(subjectQuery)
-    // const offeringQuery = await pool.query(offeringSQL, [courseId])
-    // const offeringId = listFromRows(offeringQuery)
-    // const profQuery = await pool.query(profSQL)
-    // const profId = listFromRows(profQuery)
-    // const relationshipQuery = await pool.query(courseSQL, [])
+
+    const subjectQuery = await pool.query(subjectSQL)
+    const subjectId = listFromRows(subjectQuery.rows, "subject_id");
+
+    const offeringCourseID = [1, 1, 2]
+    const offeringQuery = await pool.query(offeringSQL, offeringCourseID)
+    const offeringId = listFromRows(offeringQuery.rows, "offering_id")
+
+    const profQuery = await pool.query(profSQL)
+    const profId = listFromRows(profQuery.rows, "prof_id")
+
+    const profOfferingsRelationQuery = await pool.query(profOfferingsRelationSQL, [profId[0], 
+        offeringId[0]])
+
+    const courseSubjectRelationQuery = await pool.query(courseSubjectRelationSQL, [1, "COMPUTER SCIENCE"])
 }
 
 main()
