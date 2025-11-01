@@ -1,12 +1,24 @@
-async function getOfferings(course) {
-    const getOfferingsSQL = `
-        SELECT * FROM offerings o
-        WHERE o.course_id = $1;
-    `
-    const result = (await pool.query(getOfferingsSQL), course.course_id).rows
-    return result
+const pool = require("../models/Pool")
+
+async function getCourseOfferingsQuery(id) {
+  const getOfferingsSQL = `
+    SELECT * FROM offerings
+      WHERE offering_id = $id
+      JOIN courses ON courses.course_id = offerings.course_id;
+  `
+
+  await pool.query(getOfferingsSQL, [id])
+}
+
+async function deleteCourseOfferings(id) {
+  const deleteOfferingsSQL = `
+    DELETE FROM offerings 
+      WHERE offerings.offering_id = $1; 
+      `
+
+    await pool.query(deleteOfferingsSQL, [id])
 }
 
 module.exports = {
-    getOfferings
+  getCourseOfferingsQuery
 }

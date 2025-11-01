@@ -1,6 +1,9 @@
 const { Router } = require("express")
 
+const offeringsController = require("../controllers/OfferingsController")
+
 const offeringsRouter = Router()
+
 
 offeringsRouter.get("offerings/:id", async (req, res) => {
 
