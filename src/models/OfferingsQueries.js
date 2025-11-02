@@ -42,15 +42,7 @@ async function createOneQuery(row) {
 }
 
 async function updateOneQuery(row) {
-//        offering_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-//        offering_time_start TIME,
-//        offering_time_end TIME,
-//        year INTEGER,
-//        semester TEXT,
-//        capacity INTEGER,
-//        num_enrolled INTEGER,
-//        course_name INTEGER REFERENCES courses(course_name) ON DELETE CASCADE ON UPDATE CASCADE
-  const { start, end, year, sem, cap, enrolled, number} = row
+  const { start, end, year, sem, cap, enrolled } = row
   const updateOfferingSQL = `
     UPDATE offerings 
       SET offering_time_start = $1, offering_time_end = $2,
@@ -65,4 +57,5 @@ module.exports = {
   getAllQuery,
   deleteCourseOfferingQuery,
   createOneQuery,
+  updateOneQuery
 }
