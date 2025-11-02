@@ -5,18 +5,17 @@ const coursesController = require("../controllers/CoursesController")
 
 courseRouter.get("/", async (req, res) => {
         const allCourses = await coursesController.getAllCourses()
-        // console.log(allCourses)
-        res.render("./courses", { courses: allCourses })
-        // res.send(allCourses)
+        res.render("./courses/courses", { courses: allCourses })
     }
 )
+
 
 courseRouter.get("/:id", async (req, res) => {
     const params = req.params
 
-    let result = await coursesController.getOne(parseInt(params.id))
-    result = await coursesController.getOfferings(result[0]) 
-    return result
+    const course = await coursesController.getOne(parseInt(params.id))
+    const offerings = await coursesController.getOfferings(result[0]) 
+    res.render("./course", { offerings, course })
 })
 
 courseRouter.get("./course/:id/subjects", async (req, res) => {

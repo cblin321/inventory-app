@@ -1,8 +1,7 @@
 const pool = require("../models/Pool")
 const schema = `
     CREATE TABLE IF NOT EXISTS courses (
-        course_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        course_number TEXT,
+        course_number TEXT PRIMARY KEY,
         course_name TEXT
     );
 
@@ -11,7 +10,7 @@ const schema = `
     );
 
     CREATE TABLE IF NOT EXISTS courses_belong_to_subjects (
-        course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
+        course_number INTEGER REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE,
         subject_name TEXT REFERENCES subjects(subject_name) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
@@ -23,7 +22,7 @@ const schema = `
         semester TEXT,
         capacity INTEGER,
         num_enrolled INTEGER,
-        course_id INTEGER REFERENCES courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE
+        course_number INTEGER REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
     CREATE TABLE IF NOT EXISTS professors (
@@ -52,7 +51,7 @@ const courseSQL = `
         'CS 101',
         'Programming I' 
     )
-    RETURNING course_id;
+    RETURNING course_number;
 `
 const profSQL = `
     INSERT INTO professors (
@@ -87,7 +86,7 @@ const profOfferingsRelationSQL = `
 `
 const courseSubjectRelationSQL = `
     INSERT INTO courses_belong_to_subjects (
-        course_id,
+        course_number,
         subject_name
     )
     VALUES
@@ -105,7 +104,7 @@ const offeringSQL = `
         semester,
         capacity,
         num_enrolled,
-        course_id
+        course_number
     )
     VALUES 
     (
@@ -157,7 +156,7 @@ async function main() {
     const pool = require("./Pool")
     const initTables = await pool.query(schema)
     const courseQuery = await pool.query(courseSQL)
-    const courseId = listFromRows(courseQuery.rows, "course_id")
+    const courseId = listFromRows(courseQuery.rows, "course_number")
 
     const subjectQuery = await pool.query(subjectSQL)
     const subjectId = listFromRows(subjectQuery.rows, "subject_id");

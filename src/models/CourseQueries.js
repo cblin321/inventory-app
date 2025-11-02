@@ -11,7 +11,7 @@ async function getAllCoursesQuery() {
 async function deleteCourseQuery(id) {
     const deleteSQL = `
         DELETE FROM courses
-        WHERE id = $1
+        WHERE id = $1;
     `
 
     await pool.query(deleteSQL)
@@ -29,7 +29,7 @@ async function getOneQuery(id) {
 async function addCourseQuery(name, number) {
     const addSQL = `
         INSERT INTO courses 
-        VALUES ($1, $2)
+        VALUES ($1, $2);
     `
 
     await pool.query(addSQL, [number, name])
@@ -39,10 +39,10 @@ async function updateCourseQuery(id, name, number) {
     const updateSQL = `
         UPDATE courses
            SET name = $1, number = $2 
-        WHERE course_id = $3
+        WHERE course_id = $3;
     `
 
-    await pool.uqery(updateSQL, [name, number, id])
+    await pool.query(updateSQL, [name, number, id])
 }
 
 module.exports = {
