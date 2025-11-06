@@ -21,13 +21,13 @@ async function createCourseOffering(req, res) {
 
 async function updateCourseOffering(req, res) {
     try {
-        queries.updateCourseOffering(req, res)
+        queries.updateOneQuery(req, res)
     } catch (e) {
+        console.log(e.stack)
         res.status(500).json({
             error: 'Internal Server Error',
             message: 'Something went wrong',
         })
-        console.log(e.stack)
     }
 }
 
