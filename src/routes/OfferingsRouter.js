@@ -4,9 +4,11 @@ const offeringsController = require("../controllers/OfferingsController")
 
 const offeringsRouter = Router()
 
-
-offeringsRouter.get("offerings/:id", async (req, res) => {
-
+//testing endpoint
+offeringsRouter.get("/", async (req, res) => {
+    const offerings = await offeringsController.getAll()
+    console.log(offerings)
+    res.render("./offerings/offerings", { offerings })
 })
 
 offeringsRouter.post("/offerings/add", async (req, res) => {
@@ -26,5 +28,11 @@ offeringsRouter.put("/offerings/:id", (req, res) => {
     offeringsController.updateCourseOffering(req, res)
 
 })
+
+offeringsRouter.get("/:id", async (req, res) => {
+    const offerings = await offeringsController.getOne(req, res)
+    res.render("./offerings/offerings", { offerings, updateURL: `/offerings/edit/${req.params.id}`})
+})
+
 
 module.exports = offeringsRouter

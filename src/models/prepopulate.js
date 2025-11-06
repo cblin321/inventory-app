@@ -1,4 +1,4 @@
-const pool = require("../models/Pool")
+const pool = require("../models/Pool");
 const schema = `
     CREATE TABLE IF NOT EXISTS courses (
         course_number TEXT PRIMARY KEY,
@@ -10,7 +10,7 @@ const schema = `
     );
 
     CREATE TABLE IF NOT EXISTS courses_belong_to_subjects (
-        course_number INTEGER REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE,
+        course_number TEXT REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE,
         subject_name TEXT REFERENCES subjects(subject_name) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
@@ -22,7 +22,7 @@ const schema = `
         semester TEXT,
         capacity INTEGER,
         num_enrolled INTEGER,
-        course_number INTEGER REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE
+        course_number TEXT REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
     CREATE TABLE IF NOT EXISTS professors (
@@ -35,7 +35,7 @@ const schema = `
         prof_id INTEGER REFERENCES professors(prof_id),
         offering_id INTEGER REFERENCES offerings(offering_id)
     );
-`
+`;
 
 const courseSQL = `
     INSERT INTO courses (
@@ -52,7 +52,7 @@ const courseSQL = `
         'Programming I' 
     )
     RETURNING course_number;
-`
+`;
 const profSQL = `
     INSERT INTO professors (
         rating,
@@ -72,7 +72,7 @@ const profSQL = `
         'Bi Li'
     )
     RETURNING prof_id;
-`
+`;
 const profOfferingsRelationSQL = `
     INSERT INTO professors_teach_offerings (
         prof_id,
@@ -83,7 +83,7 @@ const profOfferingsRelationSQL = `
         $1,
         $2
     );
-`
+`;
 const courseSubjectRelationSQL = `
     INSERT INTO courses_belong_to_subjects (
         course_number,
@@ -93,8 +93,12 @@ const courseSubjectRelationSQL = `
     (
         $1,
         $2
+    ), 
+    (
+        $3,
+        $4
     );
-`
+`;
 
 const offeringSQL = `
     INSERT INTO offerings (
@@ -137,7 +141,7 @@ const offeringSQL = `
         $3
     )
     RETURNING offering_id;
-`
+`;
 const subjectSQL = `
     INSERT INTO subjects (
         subject_name
@@ -146,32 +150,37 @@ const subjectSQL = `
         ('MATH'),
         ('PHYSICS'),
         ('COMPUTER SCIENCE');
-`
+`;
 
 function listFromRows(rows, col) {
-    return rows.map(row => row[col])
+  return rows.map((row) => row[col]);
 }
 
 async function main() {
-    const pool = require("./Pool")
-    const initTables = await pool.query(schema)
-    const courseQuery = await pool.query(courseSQL)
-    const courseId = listFromRows(courseQuery.rows, "course_number")
+  const pool = require("./Pool");
+  const initTables = await pool.query(schema);
+  const courseQuery = await pool.query(courseSQL);
+  const courseNumber = listFromRows(courseQuery.rows, "course_number");
 
-    const subjectQuery = await pool.query(subjectSQL)
-    const subjectId = listFromRows(subjectQuery.rows, "subject_id");
+  const subjectQuery = await pool.query(subjectSQL);
+  const subjectId = listFromRows(subjectQuery.rows, "subject_id");
 
-    const offeringCourseID = [1, 1, 2]
-    const offeringQuery = await pool.query(offeringSQL, offeringCourseID)
-    const offeringId = listFromRows(offeringQuery.rows, "offering_id")
+  const offeringCourseNum = ["CS 620", "CS 620", "CS 101"];
+  const offeringQuery = await pool.query(offeringSQL, offeringCourseNum);
+  const offeringId = listFromRows(offeringQuery.rows, "offering_id");
 
-    const profQuery = await pool.query(profSQL)
-    const profId = listFromRows(profQuery.rows, "prof_id")
+  const profQuery = await pool.query(profSQL);
+  const profId = listFromRows(profQuery.rows, "prof_id");
 
-    const profOfferingsRelationQuery = await pool.query(profOfferingsRelationSQL, [profId[0], 
-        offeringId[0]])
+  const profOfferingsRelationQuery = await pool.query(
+    profOfferingsRelationSQL,
+    [profId[0], offeringId[0]]
+  );
 
-    const courseSubjectRelationQuery = await pool.query(courseSubjectRelationSQL, [1, "COMPUTER SCIENCE"])
+  const courseSubjectRelationQuery = await pool.query(
+    courseSubjectRelationSQL,
+    ["CS 620", "COMPUTER SCIENCE", "CS 101", "COMPUTER SCIENCE"]
+  );
 }
 
-main()
+main();

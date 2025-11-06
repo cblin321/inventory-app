@@ -15,14 +15,6 @@ async function deleteCourseOffering(req, res) {
 }
 
 async function createCourseOffering(req, res) {
-    // start-end time
-    // year
-    // sem
-    // capacity
-    // # enrolled
-    // course name/id
-
-    const { start, end, year, sem, cap, enrolled, number} = req.body
     //TODO validation/processing
     queries.createOneQuery(req.body)
 }

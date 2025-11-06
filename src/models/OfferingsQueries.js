@@ -1,11 +1,10 @@
-const { getAll } = require("../controllers/OfferingsController")
 const pool = require("../models/Pool")
 
 async function getOneQuery(id) {
   const getOfferingsSQL = `
     SELECT * FROM offerings
-      WHERE offering_id = $id
-      JOIN courses ON courses.course_id = offerings.course_id;
+      JOIN courses ON courses.course_number = offerings.course_number
+      WHERE offering_id = $1;
   `
 
   return (await pool.query(getOfferingsSQL, [id])).rows

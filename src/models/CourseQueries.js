@@ -48,7 +48,6 @@ async function updateCourseQuery(id, name, number) {
 module.exports = {
     getAllCoursesQuery,
     getOneQuery,
-    getOfferings,
     deleteCourseQuery,
     getAllCoursesQuery,
     addCourseQuery,
