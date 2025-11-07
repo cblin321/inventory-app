@@ -22,7 +22,6 @@ async function createCourseOffering(req, res) {
     // # enrolled
     // course name/id
 
-    const { start, end, year, sem, cap, enrolled, number} = req.body
     //TODO validation/processing
     queries.createOneQuery(req.body)
 }

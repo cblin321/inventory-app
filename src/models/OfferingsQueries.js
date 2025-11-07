@@ -1,32 +1,31 @@
-const { getAll } = require("../controllers/OfferingsController")
-const pool = require("../models/Pool")
+const { getAll } = require("../controllers/OfferingsController");
+const pool = require("../models/Pool");
 
 async function getOneQuery(id) {
   const getOfferingsSQL = `
     SELECT * FROM offerings
       WHERE offering_id = $id
       JOIN courses ON courses.course_id = offerings.course_id;
-  `
+  `;
 
-  return (await pool.query(getOfferingsSQL, [id])).rows
+  return (await pool.query(getOfferingsSQL, [id])).rows;
 }
 
 async function getAllQuery() {
   const getAllSQL = `
     SELECT * FROM offerings;
-  `
+  `;
 
-  return (await pool.query(getAllSQL)).rows
+  return (await pool.query(getAllSQL)).rows;
 }
-
 
 async function deleteCourseOfferingQuery(id) {
   const deleteOfferingsSQL = `
     DELETE FROM offerings 
       WHERE offerings.offering_id = $1; 
-      `
+      `;
 
-    await pool.query(deleteOfferingsSQL, [id])
+  await pool.query(deleteOfferingsSQL, [id]);
 }
 
 async function createOneQuery(row) {
@@ -35,21 +34,37 @@ async function createOneQuery(row) {
       VALUES (
         $1, $2, $3, $4, $5, $6, $7
       );
-  `
-  const { start, end, year, sem, cap, enrolled, course_num } = row
+  `;
+  const { start, end, year, sem, cap, enrolled, course_num } = row;
 
-  await pool.query(addOfferingSQL, [start, end, year, sem, cap, enrolled, course_num])
+  await pool.query(addOfferingSQL, [
+    start,
+    end,
+    year,
+    sem,
+    cap,
+    enrolled,
+    course_num,
+  ]);
 }
 
 async function updateOneQuery(row) {
-  const { start, end, year, sem, cap, enrolled } = row
+  const { start, end, year, sem, cap, enrolled } = row;
   const updateOfferingSQL = `
     UPDATE offerings 
       SET offering_time_start = $1, offering_time_end = $2,
       year = $3, semester = $4, capacity = $5, enrolled = $6
-  `
+  `;
 
-  await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, enrolled, course_num])
+  await pool.query(updateOfferingSQL, [
+    start,
+    end,
+    year,
+    sem,
+    cap,
+    enrolled,
+    course_num,
+  ]);
 }
 
 module.exports = {
@@ -57,5 +72,5 @@ module.exports = {
   getAllQuery,
   deleteCourseOfferingQuery,
   createOneQuery,
-  updateOneQuery
-}
+  updateOneQuery,
+};

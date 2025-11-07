@@ -23,7 +23,6 @@ async function updateCourse(req, res) {
     const id = req.params["id"]
     const { name, number } = req.body
     queries.updateCourseQuery(id, name, number)
-
 }
 
 module.exports = {
