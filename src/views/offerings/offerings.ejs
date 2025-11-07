@@ -6,6 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    
+   <h1>Offerings for: <%= offerings.length > 0 ? offerings[0].course_number : "No Offerings" %></h1> 
+   <% offerings.map((offering) => { %>
+    <p><%= `${offering.semester} ${offering.year}`  %></p>
+    <p><%= `Start time: ${offering.offering_time_start}`%></p>
+    <p><%= `End time: ${offering.offering_time_end}`  %></p>
+    <p><%= `Course capacity: ${offering.capacity}`  %></p>
+    <p><%= `Currently enrolled: ${offering.num_enrolled}`  %></p>
+    <button onclick="window.location.href = '<%= updateURL %>'">Update</button>
+    <button>Update</button>
+   <% }) %>
 </body>
 </html>

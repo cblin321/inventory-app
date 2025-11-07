@@ -1,12 +1,11 @@
-const { getAll } = require("../controllers/OfferingsController");
-const pool = require("../models/Pool");
+const pool = require("../models/Pool")
 
 async function getOneQuery(id) {
   const getOfferingsSQL = `
     SELECT * FROM offerings
-      WHERE offering_id = $id
-      JOIN courses ON courses.course_id = offerings.course_id;
-  `;
+      JOIN courses ON courses.course_number = offerings.course_number
+      WHERE offering_id = $1;
+  `
 
   return (await pool.query(getOfferingsSQL, [id])).rows;
 }
@@ -49,22 +48,14 @@ async function createOneQuery(row) {
 }
 
 async function updateOneQuery(row) {
-  const { start, end, year, sem, cap, enrolled } = row;
+  const { start, end, year, sem, cap, enrolled, course_number } = row
   const updateOfferingSQL = `
     UPDATE offerings 
       SET offering_time_start = $1, offering_time_end = $2,
       year = $3, semester = $4, capacity = $5, enrolled = $6
   `;
 
-  await pool.query(updateOfferingSQL, [
-    start,
-    end,
-    year,
-    sem,
-    cap,
-    enrolled,
-    course_num,
-  ]);
+  await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, enrolled, course_number])
 }
 
 module.exports = {

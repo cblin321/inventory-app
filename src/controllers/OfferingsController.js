@@ -15,26 +15,19 @@ async function deleteCourseOffering(req, res) {
 }
 
 async function createCourseOffering(req, res) {
-    // start-end time
-    // year
-    // sem
-    // capacity
-    // # enrolled
-    // course name/id
-
     //TODO validation/processing
     queries.createOneQuery(req.body)
 }
 
 async function updateCourseOffering(req, res) {
     try {
-        queries.updateCourseOffering(req, res)
+        queries.updateOneQuery(req, res)
     } catch (e) {
+        console.log(e.stack)
         res.status(500).json({
             error: 'Internal Server Error',
             message: 'Something went wrong',
         })
-        console.log(e.stack)
     }
 }
 

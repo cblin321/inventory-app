@@ -10,7 +10,7 @@ const schema = `
     );
 
     CREATE TABLE IF NOT EXISTS courses_belong_to_subjects (
-        course_number INTEGER REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE,
+        course_number TEXT REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE,
         subject_name TEXT REFERENCES subjects(subject_name) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
@@ -22,7 +22,7 @@ const schema = `
         semester TEXT,
         capacity INTEGER,
         num_enrolled INTEGER,
-        course_number INTEGER REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE
+        course_number TEXT REFERENCES courses(course_number) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
     CREATE TABLE IF NOT EXISTS professors (
@@ -93,6 +93,10 @@ const courseSubjectRelationSQL = `
     (
         $1,
         $2
+    ), 
+    (
+        $3,
+        $4
     );
 `;
 
@@ -156,13 +160,13 @@ async function main() {
   const pool = require("./Pool");
   const initTables = await pool.query(schema);
   const courseQuery = await pool.query(courseSQL);
-  const courseId = listFromRows(courseQuery.rows, "course_number");
+  const courseNumber = listFromRows(courseQuery.rows, "course_number");
 
   const subjectQuery = await pool.query(subjectSQL);
   const subjectId = listFromRows(subjectQuery.rows, "subject_id");
 
-  const offeringCourseID = [1, 1, 2];
-  const offeringQuery = await pool.query(offeringSQL, offeringCourseID);
+  const offeringCourseNum = ["CS 620", "CS 620", "CS 101"];
+  const offeringQuery = await pool.query(offeringSQL, offeringCourseNum);
   const offeringId = listFromRows(offeringQuery.rows, "offering_id");
 
   const profQuery = await pool.query(profSQL);
@@ -175,7 +179,7 @@ async function main() {
 
   const courseSubjectRelationQuery = await pool.query(
     courseSubjectRelationSQL,
-    [1, "COMPUTER SCIENCE"]
+    ["CS 620", "COMPUTER SCIENCE", "CS 101", "COMPUTER SCIENCE"]
   );
 }
 

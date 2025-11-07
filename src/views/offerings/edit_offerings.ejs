@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
+    <h1>
+      Update Offering for <%= `${offering.course_number} ${offering.course_name} ${offering.semester}
+      ${offering.year}` %>
+    </h1>
     <form method="POST">
-        <label for="number">Course Number: </label>
-        <input type="text" id="number" value="<%= offering.course_number  %>">
+      <label for="number">Course Number: </label>
+      <input type="text" id="number" value="<%= offering.course_number  %>" />
 
-        <label for="start">Start Time: </label>
-        <input type="text" id="start" value="<%= offering.offering_time_start %>">
+      <label for="start">Start Time: </label>
+      <input
+        type="text"
+        id="start"
+        value="<%= offering.offering_time_start %>"
+      />
 
-        <label for="end">End Time: </label>
-        <input type="text" id="end" value="<%= offering.offering_time_end %>">
+      <label for="end">End Time: </label>
+      <input type="text" id="end" value="<%= offering.offering_time_end %>" />
 
-        <label for="year">Year: </label>
-        <input type="text" id="year" value="<%= offering.year  %>">
+      <label for="year">Year: </label>
+      <input type="text" id="year" value="<%= offering.year  %>" />
 
-        <label for="sem">Semester: </label>
-        <input type="text" id="sem" value="<%= offering.semester  %>">
+      <label for="sem">Semester: </label>
+      <input type="text" id="sem" value="<%= offering.semester  %>" />
 
-        <label for="cap">Capacity: </label>
-        <input type="text" id="cap" value="<%= offering.capacity  %>">
+      <label for="cap">Capacity: </label>
+      <input type="text" id="cap" value="<%= offering.capacity  %>" />
 
-        <label for="enrolled">Students Enrolled: </label>
-        <input type="text" id="enrolled" value="<%= offering.num_enrolled  %>">
+      <label for="enrolled">Students Enrolled: </label>
+      <input type="text" id="enrolled" value="<%= offering.num_enrolled  %>" />
 
-        <button type="submit"></button>
+      <button type="submit">Update Course Offering</button>
     </form>
-    
-</body>
+  </body>
 </html>
