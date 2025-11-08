@@ -26,6 +26,7 @@ offeringsRouter.delete("/offerings/:id", async (req, res) => {
 });
 
 offeringsRouter.post("/edit/:id", (req, res) => {
+  console.log(req.body)
   offeringsController.updateCourseOffering(req, res);
   const id = req.params["id"]
   res.redirect(`../${id}`)

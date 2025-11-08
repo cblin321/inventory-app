@@ -48,14 +48,16 @@ async function createOneQuery(row) {
 }
 
 async function updateOneQuery(row) {
-  const { start, end, year, sem, cap, enrolled, course_number } = row
+  const { start, end, year, sem, cap, num_enrolled, course_number } = row
   const updateOfferingSQL = `
     UPDATE offerings 
       SET offering_time_start = $1, offering_time_end = $2,
-      year = $3, semester = $4, capacity = $5, enrolled = $6
+      year = $3, semester = $4, capacity = $5, num_enrolled = $6
   `;
 
-  await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, enrolled, course_number])
+  console.log("row", row)
+
+  await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, num_enrolled, ])
 }
 
 module.exports = {
