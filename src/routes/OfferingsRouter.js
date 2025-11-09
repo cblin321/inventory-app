@@ -14,9 +14,11 @@ const isTime = (value) => {
   return true;
 };
 
-const validators = [
+const SEMESTER_VALUES = ['SPRING', 'FALL', 'SUMMER']
+
+const updateValidators = [
   body("start")
-    .custom((value) => isTime(value))
+    .custom((value) => isTime(value)).withMessage("Invalid time format.")
     .custom((value, { req }) => {
         console.log(req.body)
       const start = value.split(":").map((val) => parseInt(val));
@@ -27,8 +29,10 @@ const validators = [
       if (start[0] == end[0] && start[1] > end[1]) throw err;
 
       return true;
-    }),
-  body("end").custom((value) => isTime(value)),
+    }).withMessage("Start must be before end."),
+  body("end").custom((value) => isTime(value)).withMessage("Invalid time format."),
+  body("sem").isIn(SEMESTER_VALUES).withMessage("Semester must be: SPRING, FALL, or SUMMER"),
+
 ];
 
 //testing endpoint
@@ -50,9 +54,13 @@ offeringsRouter.delete("/offerings/:id", async (req, res) => {
   offeringsController.deleteCourseOffering(req, res);
 });
 
-offeringsRouter.post("/edit/:id", [ validators, (req, res) => {
+offeringsRouter.post("/edit/:id", [ updateValidators, (req, res) => {
     const results = validationResult(req);
-    console.log(results)
+    if (!results.isEmpty()) 
+        return res.status(400).json({
+            error: "Invalid input",
+            details: results.array()
+    })
   offeringsController.updateCourseOffering(req, res);
   const id = req.params["id"];
   res.redirect(`../${id}`);
