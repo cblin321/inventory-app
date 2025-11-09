@@ -16,13 +16,14 @@
 
       <label for="start">Start Time: </label>
       <input required name="start"
+        step="60"
         type="time"
         id="start"
         value="<%= offering.offering_time_start %>"
       />
 
       <label for="end">End Time: </label>
-      <input required name="end" type="time" id="end" value="<%= offering.offering_time_end %>" />
+      <input required name="end" step="60" type="time" id="end" value="<%= offering.offering_time_end %>" />
 
       <label for="year">Year: </label>
       <input required name="year" type="text" id="year" value="<%= offering.year  %>" />

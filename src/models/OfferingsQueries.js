@@ -55,7 +55,6 @@ async function updateOneQuery(row) {
       year = $3, semester = $4, capacity = $5, num_enrolled = $6
   `;
 
-  console.log("row", row)
 
   await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, num_enrolled, ])
 }
