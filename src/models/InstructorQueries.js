@@ -27,12 +27,16 @@ async function deleteOne(id) {
   await pool.query(getOneSQL, [id])
 }
 
-async function updateOne(id) {
+async function updateOne(id, row) {
   const updateOneSQL = `
-    UPDATE instructors
-      WHERE instructors_id = $1
+    UPDATE professors
+      SET name = $1, rating = $2
+      WHERE instructors_id = $3;
   `
-  await
+  
+  const { name, rating } = row
+
+  await pool.query(updateOneSQL, [name, rating, id])
 }
 
 module.exports = {

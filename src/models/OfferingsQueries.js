@@ -53,6 +53,7 @@ async function updateOneQuery(row) {
     UPDATE offerings 
       SET offering_time_start = $1, offering_time_end = $2,
       year = $3, semester = $4, capacity = $5, enrolled = $6
+      WHERE course_number = $7;
   `;
 
   await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, enrolled, course_number])

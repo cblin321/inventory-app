@@ -160,13 +160,23 @@ async function main() {
   const pool = require("./Pool");
   const initTables = await pool.query(schema);
   const courseQuery = await pool.query(courseSQL);
+<<<<<<< HEAD
+  const courseId = listFromRows(courseQuery.rows, "course_number");
+=======
   const courseNumber = listFromRows(courseQuery.rows, "course_number");
+>>>>>>> f2965bd7eea1cfdfb95f6a371c9ce896e2a0b654
+
 
   const subjectQuery = await pool.query(subjectSQL);
   const subjectId = listFromRows(subjectQuery.rows, "subject_id");
 
+<<<<<<< HEAD
+  const offeringCourseID = [1, 1, 2];
+  const offeringQuery = await pool.query(offeringSQL, offeringCourseID);
+=======
   const offeringCourseNum = ["CS 620", "CS 620", "CS 101"];
   const offeringQuery = await pool.query(offeringSQL, offeringCourseNum);
+>>>>>>> f2965bd7eea1cfdfb95f6a371c9ce896e2a0b654
   const offeringId = listFromRows(offeringQuery.rows, "offering_id");
 
   const profQuery = await pool.query(profSQL);
@@ -179,7 +189,11 @@ async function main() {
 
   const courseSubjectRelationQuery = await pool.query(
     courseSubjectRelationSQL,
+<<<<<<< HEAD
+    [1, "COMPUTER SCIENCE"]
+=======
     ["CS 620", "COMPUTER SCIENCE", "CS 101", "COMPUTER SCIENCE"]
+>>>>>>> f2965bd7eea1cfdfb95f6a371c9ce896e2a0b654
   );
 }
 
