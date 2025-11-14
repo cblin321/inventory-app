@@ -45,16 +45,17 @@ offeringsRouter.post("/offerings/add", async (req, res) => {
   offeringsController.createCourseOffering(req, res);
 });
 
-offeringsRouter.get("/edit/:id", async (req, res) => {
+offeringsRouter.get("/:id/edit", async (req, res) => {
   const offering = (await offeringsController.getOne(req, res))[0];
   res.render("./offerings/edit_offerings", { offering });
 });
 
-offeringsRouter.delete("/offerings/:id", async (req, res) => {
+offeringsRouter.post("/:id/delete", async (req, res) => {
   offeringsController.deleteCourseOffering(req, res);
+  res.redirect(`../${req.params["id"]}`).status(200)
 });
 
-offeringsRouter.post("/edit/:id", [ updateValidators, (req, res) => {
+offeringsRouter.post("/:id/edit", [ updateValidators, (req, res) => {
     const results = validationResult(req);
     if (!results.isEmpty()) 
         return res.status(400).json({
@@ -66,13 +67,15 @@ offeringsRouter.post("/edit/:id", [ updateValidators, (req, res) => {
   res.redirect(`../${id}`);
 }]);
 
+//get offerings for a certain courseID
 offeringsRouter.get("/:id", [
   async (req, res) => {
     const offerings = await offeringsController.getOne(req, res);
     res.render("./offerings/offerings", {
       offerings,
-      updateURL: `/offerings/edit/${req.params.id}`,
-      deleteURL: `/offerings/delete/${req.params.id}`,
+      updateURL: `/offerings/${req.params.id}/edit`,
+      deleteURL: `/offerings/${req.params.id}/delete`,
+      addURL: `offerings/add`,
     });
   },
 ]);

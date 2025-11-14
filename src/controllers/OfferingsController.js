@@ -7,6 +7,8 @@ async function getAll() {
 async function getOne(req, res) {
    const id = req.params["id"] 
    const rows = await queries.getOneQuery(id)
+   if (rows.length == 0)
+        console.log("no rows!")
    const removeSeconds = time => time.slice(0, 5)
     return rows.map(row => {
         return {
@@ -19,7 +21,8 @@ async function getOne(req, res) {
 
 async function deleteCourseOffering(req, res) {
     const id = req.params["id"]
-    queries.deleteCourseOfferingQuery(id)
+    console.log(id)
+    await queries.deleteCourseOfferingQuery(id)
 }
 
 async function createCourseOffering(req, res) {

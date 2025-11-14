@@ -14,7 +14,10 @@
     <p><%= `Course capacity: ${offering.capacity}`  %></p>
     <p><%= `Currently enrolled: ${offering.num_enrolled}`  %></p>
     <button onclick="window.location.href = '<%= updateURL %>'">Update</button>
-    <button onclick="window.locaiton.href= '<%= deleteURL %>'">Delete</button>
+    <form method="POST" action="<%= deleteURL %>">
+        <button type="submit">Delete Course</button>
+    </form>
+    <button onClick="'<%= addURL %>'">Add Course Offering</button>
    <% }) %>
 </body>
 </html>
