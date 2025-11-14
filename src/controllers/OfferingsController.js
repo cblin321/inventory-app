@@ -6,7 +6,15 @@ async function getAll() {
 
 async function getOne(req, res) {
    const id = req.params["id"] 
-   return await queries.getOneQuery(id) 
+   const rows = await queries.getOneQuery(id)
+   const removeSeconds = time => time.slice(0, 5)
+    return rows.map(row => {
+        return {
+            ...row,
+            offering_time_start: removeSeconds(row.offering_time_start),
+            offering_time_end: removeSeconds(row.offering_time_end),
+        }
+    })
 }
 
 async function deleteCourseOffering(req, res) {
@@ -21,7 +29,7 @@ async function createCourseOffering(req, res) {
 
 async function updateCourseOffering(req, res) {
     try {
-        queries.updateOneQuery(req, res)
+        queries.updateOneQuery(req.body)
     } catch (e) {
         console.log(e.stack)
         res.status(500).json({

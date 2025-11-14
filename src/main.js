@@ -6,6 +6,7 @@ const indexRouter = require("./routes/IndexRouter")
 const courseRouter = require("./routes/CourseRouter")
 const offeringRouter = require("./routes/OfferingsRouter")
 
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.set("views", path.join(__dirname, "views"))
