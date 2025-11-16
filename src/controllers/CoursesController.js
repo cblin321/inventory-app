@@ -4,7 +4,8 @@ async function getAllCourses(req, res) {
     return getAllCoursesResult
 }
 
-async function getOne(id) {
+async function getOne(req, res) {
+    const id = req.params.id
     const getOneQuery = await queries.getOneQuery(id) 
     return getOneQuery
 }
@@ -26,6 +27,7 @@ async function updateCourse(req, res) {
 }
 
 module.exports = {
+    getOne,
     getAllCourses, 
     addCourse,
     updateCourse,

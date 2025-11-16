@@ -1,6 +1,7 @@
 const { Router } = require("express");
 
 const offeringsController = require("../controllers/OfferingsController");
+const courseController = require("../controllers/CoursesController")
 const { validationResult, body } = require("express-validator");
 
 const offeringsRouter = Router();
@@ -14,13 +15,14 @@ const isTime = (value) => {
   return true;
 };
 
-const SEMESTER_VALUES = ['SPRING', 'FALL', 'SUMMER']
+const SEMESTER_VALUES = ["SPRING", "FALL", "SUMMER"];
 
 const updateValidators = [
   body("start")
-    .custom((value) => isTime(value)).withMessage("Invalid time format.")
+    .custom((value) => isTime(value))
+    .withMessage("Invalid time format.")
     .custom((value, { req }) => {
-        console.log(req.body)
+      console.log(req.body);
       const start = value.split(":").map((val) => parseInt(val));
       const end = req.body["end"].split(":").map((val) => parseInt(val));
       const err = new Error("Start cannot be after end");
@@ -29,10 +31,22 @@ const updateValidators = [
       if (start[0] == end[0] && start[1] > end[1]) throw err;
 
       return true;
-    }).withMessage("Start must be before end."),
-  body("end").custom((value) => isTime(value)).withMessage("Invalid time format."),
-  body("sem").isIn(SEMESTER_VALUES).withMessage("Semester must be: SPRING, FALL, or SUMMER"),
+    })
+    .withMessage("Start must be before end."),
+  body("end")
+    .custom((value) => isTime(value))
+    .withMessage("Invalid time format."),
+  body("sem")
+    .isIn(SEMESTER_VALUES)
+    .withMessage("Semester must be: SPRING, FALL, or SUMMER"),
+  body("cap")
+    .isInt({ gt: "0" })
+    .custom((value, { req }) => {
+      if (value < parseInt(req.body.num_enrolled))
+        throw new Error("Cannot have capacity be less than enrolled students");
 
+      return true;
+    }),
 ];
 
 //testing endpoint
@@ -41,8 +55,20 @@ offeringsRouter.get("/", async (req, res) => {
   res.render("./offerings/offerings", { offerings });
 });
 
-offeringsRouter.post("/offerings/add", async (req, res) => {
+offeringsRouter.get("/:id/add", async (req, res) => {
+  const course = (await courseController.getOne(req, res))[0]
+  res.render("./offerings/add_offering", {course});
+})
+
+offeringsRouter.post(":id/add", async (req, res) => {
   offeringsController.createCourseOffering(req, res);
+  const results = validationResult(req);
+  if (!results.isEmpty())
+    return res.status(400).json({
+      error: "Invalid input",
+      details: results.array(),
+    });
+  res.redirect(`../${req.params["id"]}`).status(200);
 });
 
 offeringsRouter.get("/:id/edit", async (req, res) => {
@@ -52,30 +78,36 @@ offeringsRouter.get("/:id/edit", async (req, res) => {
 
 offeringsRouter.post("/:id/delete", async (req, res) => {
   offeringsController.deleteCourseOffering(req, res);
-  res.redirect(`../${req.params["id"]}`).status(200)
+  res.redirect(`../${req.params["id"]}`).status(200);
 });
 
-offeringsRouter.post("/:id/edit", [ updateValidators, (req, res) => {
+offeringsRouter.post("/:id/edit", [
+  updateValidators,
+  (req, res) => {
     const results = validationResult(req);
-    if (!results.isEmpty()) 
-        return res.status(400).json({
-            error: "Invalid input",
-            details: results.array()
-    })
-  offeringsController.updateCourseOffering(req, res);
-  const id = req.params["id"];
-  res.redirect(`../${id}`);
-}]);
+    if (!results.isEmpty())
+      return res.status(400).json({
+        error: "Invalid input",
+        details: results.array(),
+      });
+    offeringsController.updateCourseOffering(req, res);
+    const id = req.params["id"];
+    res.redirect(`../${id}`);
+  },
+]);
 
 //get offerings for a certain courseID
 offeringsRouter.get("/:id", [
   async (req, res) => {
-    const offerings = await offeringsController.getOne(req, res);
+    let offerings = await offeringsController.getAllForCourse(req, res);
+    offerings = offerings.map((offering) => ({
+      ...offering,
+      updateURL: `/offerings/${offering.offering_id}/edit`,
+      deleteURL: `/offerings/${offering.offering_id}/delete`,
+    }));
     res.render("./offerings/offerings", {
       offerings,
-      updateURL: `/offerings/${req.params.id}/edit`,
-      deleteURL: `/offerings/${req.params.id}/delete`,
-      addURL: `offerings/add`,
+      addURL: `/offerings/${req.params.id}/add`,
     });
   },
 ]);

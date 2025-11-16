@@ -10,6 +10,15 @@ async function getOneQuery(id) {
   return (await pool.query(getOfferingsSQL, [id])).rows;
 }
 
+async function getAllForCourse(cid) {
+  const getCourseOfferingsSQL = `
+    SELECT * FROM offerings
+    WHERE course_number = $1;
+  ` 
+
+  return (await pool.query(getCourseOfferingsSQL, [cid])).rows
+}
+
 async function getAllQuery() {
   const getAllSQL = `
     SELECT * FROM offerings;
@@ -60,7 +69,7 @@ async function updateOneQuery(row) {
   const updateOfferingSQL = `
     UPDATE offerings 
       SET offering_time_start = $1, offering_time_end = $2,
-      year = $3, semester = $4, capacity = $5, enrolled = $6
+      year = $3, semester = $4, capacity = $5, num_enrolled = $6
       WHERE course_number = $7;
   `;
 
@@ -73,4 +82,5 @@ module.exports = {
   deleteCourseOfferingQuery,
   createOneQuery,
   updateOneQuery,
+  getAllForCourse
 };

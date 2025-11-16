@@ -19,6 +19,12 @@ async function getOne(req, res) {
     })
 }
 
+async function getAllForCourse(req, res) {
+    const cid = req.params["id"]
+
+    return await queries.getAllForCourse(cid)
+}
+
 async function deleteCourseOffering(req, res) {
     const id = req.params["id"]
     console.log(id)
@@ -45,7 +51,8 @@ async function updateCourseOffering(req, res) {
 module.exports = {
     getOne,
     getAll,
+    getAllForCourse,
     deleteCourseOffering,
     createCourseOffering,
-    updateCourseOffering
+    updateCourseOffering,
 }

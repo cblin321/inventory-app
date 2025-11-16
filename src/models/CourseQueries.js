@@ -20,7 +20,7 @@ async function deleteCourseQuery(id) {
 async function getOneQuery(id) {
     const getOneSQL = `
         SELECT * FROM courses
-        WHERE course_id = $1;
+        WHERE course_number = $1;
     `
 
     const result = (await pool.query(getOneSQL, [id])).rows

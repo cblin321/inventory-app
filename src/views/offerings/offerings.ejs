@@ -13,11 +13,11 @@
     <p><%= `End time: ${offering.offering_time_end}`  %></p>
     <p><%= `Course capacity: ${offering.capacity}`  %></p>
     <p><%= `Currently enrolled: ${offering.num_enrolled}`  %></p>
-    <button onclick="window.location.href = '<%= updateURL %>'">Update</button>
-    <form method="POST" action="<%= deleteURL %>">
+    <button onclick="window.location.href = '<%= offering.updateURL %>'">Update</button>
+    <form method="POST" action="<%= offering.deleteURL %>">
         <button type="submit">Delete Course</button>
     </form>
-    <button onClick="'<%= addURL %>'">Add Course Offering</button>
    <% }) %>
+    <button onclick="window.location.href='<%= addURL %>'">Add Course Offering</button>
 </body>
 </html>
