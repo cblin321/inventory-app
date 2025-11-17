@@ -31,7 +31,6 @@ async function deleteCourseOfferingQuery(id) {
   const deleteOfferingsSQL = `
     DELETE FROM offerings 
       WHERE offerings.offering_id = $1; 
-
       `;
   
   const deleteRelationSQL = `
@@ -44,24 +43,35 @@ async function deleteCourseOfferingQuery(id) {
   await pool.query(deleteOfferingsSQL, [id]);
 }
 
-async function createOneQuery(row) {
+async function createOneQuery(row, id) {
   const addOfferingSQL = `
-    INSERT INTO offerings
+    INSERT INTO offerings (
+      offering_time_start,
+        offering_time_end,
+        year,
+        semester,
+        capacity,
+        num_enrolled,
+        course_number
+    )
       VALUES (
         $1, $2, $3, $4, $5, $6, $7
       );
   `;
-  const { start, end, year, sem, cap, enrolled, course_num } = row;
+  const { start, end, year, sem, cap, num_enrolled } = row;
 
-  await pool.query(addOfferingSQL, [
+  const result = await pool.query(addOfferingSQL, [
     start,
     end,
     year,
     sem,
     cap,
-    enrolled,
-    course_num,
+    num_enrolled,
+    id
   ]);
+
+
+  return result
 }
 
 async function updateOneQuery(row) {

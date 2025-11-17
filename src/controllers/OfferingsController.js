@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator")
 const queries = require("../models/OfferingsQueries")
 
 async function getAll() {
@@ -27,18 +28,18 @@ async function getAllForCourse(req, res) {
 
 async function deleteCourseOffering(req, res) {
     const id = req.params["id"]
-    console.log(id)
     await queries.deleteCourseOfferingQuery(id)
 }
 
 async function createCourseOffering(req, res) {
     //TODO validation/processing
-    queries.createOneQuery(req.body)
+    console.log(req.params.id)
+    await queries.createOneQuery(req.body, req.params.id)
 }
 
 async function updateCourseOffering(req, res) {
     try {
-        queries.updateOneQuery(req.body)
+        await queries.updateOneQuery(req.body)
     } catch (e) {
         console.log(e.stack)
         res.status(500).json({

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 
 const offeringsController = require("../controllers/OfferingsController");
-const courseController = require("../controllers/CoursesController")
+const courseController = require("../controllers/CoursesController");
 const { validationResult, body } = require("express-validator");
 
 const offeringsRouter = Router();
@@ -56,20 +56,23 @@ offeringsRouter.get("/", async (req, res) => {
 });
 
 offeringsRouter.get("/:id/add", async (req, res) => {
-  const course = (await courseController.getOne(req, res))[0]
-  res.render("./offerings/add_offering", {course});
-})
-
-offeringsRouter.post(":id/add", async (req, res) => {
-  offeringsController.createCourseOffering(req, res);
-  const results = validationResult(req);
-  if (!results.isEmpty())
-    return res.status(400).json({
-      error: "Invalid input",
-      details: results.array(),
-    });
-  res.redirect(`../${req.params["id"]}`).status(200);
+  const course = (await courseController.getOne(req, res))[0];
+  res.render("./offerings/add_offering", { course });
 });
+
+offeringsRouter.post("/:id/add", [
+  updateValidators,
+  async (req, res) => {
+    const results = validationResult(req);
+    if (!results.isEmpty())
+      return res.status(400).json({
+        error: "Invalid input",
+        details: results.array(),
+      });
+    await offeringsController.createCourseOffering(req, res);
+    res.redirect(`../${req.params["id"]}`).status(200);
+  },
+]);
 
 offeringsRouter.get("/:id/edit", async (req, res) => {
   const offering = (await offeringsController.getOne(req, res))[0];
@@ -77,20 +80,20 @@ offeringsRouter.get("/:id/edit", async (req, res) => {
 });
 
 offeringsRouter.post("/:id/delete", async (req, res) => {
-  offeringsController.deleteCourseOffering(req, res);
+  await offeringsController.deleteCourseOffering(req, res);
   res.redirect(`../${req.params["id"]}`).status(200);
 });
 
 offeringsRouter.post("/:id/edit", [
   updateValidators,
-  (req, res) => {
+  async (req, res) => {
     const results = validationResult(req);
     if (!results.isEmpty())
       return res.status(400).json({
         error: "Invalid input",
         details: results.array(),
       });
-    offeringsController.updateCourseOffering(req, res);
+    await offeringsController.updateCourseOffering(req, res);
     const id = req.params["id"];
     res.redirect(`../${id}`);
   },
