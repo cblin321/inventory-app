@@ -10,7 +10,9 @@
     <% courses.map((course, idx) => { %>  
         <p><%= course.course_name %></p>
         <p><%= course.course_number %></p>
-        <a href="/courses/<%= course.course_id%>">See more</a>
+        <a href="<%= course.offeringsURL %>">See more</a>
     <% }) %>  
+
+        <a href="<%= addURL %>"><button type="submit">Add</button></a>
 </body>
 </html>
