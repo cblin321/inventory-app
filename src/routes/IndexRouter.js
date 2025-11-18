@@ -1,8 +1,13 @@
-const { Router } = require("express")
+const { Router } = require("express");
 
-const indexRouter = Router()
+const indexRouter = Router();
+const courseController = require("../controllers/CoursesController");
 
-indexRouter.get("/", (req, res) => res.render("./index"))
+indexRouter.get("/", async (req, res) =>
+  res.render("./courses/courses", {
+    courses: await courseController.getAllCourses(req, res),
+    addURL: "courses/add",
+  })
+);
 
-
-module.exports = indexRouter
+module.exports = indexRouter;

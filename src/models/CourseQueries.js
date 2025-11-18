@@ -28,7 +28,7 @@ async function getOneQuery(id) {
 }
 async function addCourseQuery(name, number) {
     const addSQL = `
-        INSERT INTO courses 
+        INSERT INTO courses (course_number, course_name)
         VALUES ($1, $2);
     `
 

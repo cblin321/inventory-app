@@ -1,6 +1,10 @@
 const queries = require("../models/CourseQueries")
 async function getAllCourses(req, res) {
-    const getAllCoursesResult = await queries.getAllCoursesQuery()
+    let getAllCoursesResult = await queries.getAllCoursesQuery()
+    getAllCoursesResult = getAllCoursesResult.map((course) => ({
+        ...course,
+        offeringsURL: `../offerings/${course.course_number}`,
+    }));
     return getAllCoursesResult
 }
 
@@ -16,8 +20,8 @@ async function deleteCourse(req, res) {
 }
 
 async function addCourse(req, res) {
-    const { name, number } = req.body
-    queries.addCourseQuery(name, number)
+    const { course_name, course_number } = req.body
+    await queries.addCourseQuery(course_name, course_number)
 }
 
 async function updateCourse(req, res) {

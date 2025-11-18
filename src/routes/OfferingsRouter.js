@@ -22,7 +22,6 @@ const updateValidators = [
     .custom((value) => isTime(value))
     .withMessage("Invalid time format.")
     .custom((value, { req }) => {
-      console.log(req.body);
       const start = value.split(":").map((val) => parseInt(val));
       const end = req.body["end"].split(":").map((val) => parseInt(val));
       const err = new Error("Start cannot be after end");
