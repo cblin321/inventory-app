@@ -6,7 +6,6 @@ const offeringsController = require("../controllers/OfferingsController");
 
 courseRouter.get("/", async (req, res) => {
   let allCourses = await coursesController.getAllCourses();
-  console.log("root");
   res.render("./courses/courses", {
     courses: allCourses,
     addURL: "/courses/add/",
