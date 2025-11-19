@@ -4,6 +4,8 @@ async function getAllCourses(req, res) {
     getAllCoursesResult = getAllCoursesResult.map((course) => ({
         ...course,
         offeringsURL: `../offerings/${course.course_number}`,
+        deleteURL: `../courses/delete/${course.course_number}`,
+        updateURL: `../courses/update/${course.course_number}`,
     }));
     return getAllCoursesResult
 }

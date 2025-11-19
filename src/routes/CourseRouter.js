@@ -27,9 +27,15 @@ courseRouter.delete("/delete/:id", async (req, res) => {
   coursesController.deleteCourse(req, res);
 });
 
-courseRouter.put("/edit/:id", async (req, res) => {
-  coursesController.updateCourse(req, res);
+courseRouter.get("/update/:id", async (req, res) => {
+  console.log("fjdskdfjl")
+  
+  res.render("./courses/edit_courses")
 });
+
+courseRouter.post("/updaqte:id", async (req, res) => {
+  coursesController.updateCourse(req, res)
+})
 
 courseRouter.get("/:id", async (req, res) => {
   const course = await coursesController.getOne(req, res);
