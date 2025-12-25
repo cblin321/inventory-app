@@ -38,8 +38,8 @@ async function addCourseQuery(name, number) {
 async function updateCourseQuery(id, name, number) {
     const updateSQL = `
         UPDATE courses
-           SET name = $1, number = $2 
-        WHERE course_id = $3;
+           SET course_name = $1, course_number = $2 
+        WHERE course_number = $3;
     `
 
     await pool.query(updateSQL, [name, number, id])

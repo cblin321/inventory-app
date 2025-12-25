@@ -28,8 +28,9 @@ async function addCourse(req, res) {
 
 async function updateCourse(req, res) {
     const id = req.params["id"]
-    const { name, number } = req.body
-    queries.updateCourseQuery(id, name, number)
+    console.log("update id" + id)
+    const { course_name, course_number } = req.body
+    queries.updateCourseQuery(id, course_name, course_number)
 }
 
 module.exports = {

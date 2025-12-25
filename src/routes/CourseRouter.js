@@ -28,12 +28,20 @@ courseRouter.delete("/delete/:id", async (req, res) => {
 });
 
 courseRouter.get("/update/:id", async (req, res) => {
-  console.log("fjdskdfjl")
-  
-  res.render("./courses/edit_courses")
+  const id = req.params.id
+  const course = (await coursesController.getOne(req, res))
+  if (course.length > 1) {
+    throw new Error("duplicate courses in db")
+  }
+  console.log(id)
+  res.render("./courses/edit_courses", {
+    course: course[0], 
+    id: id,
+  })
+
 });
 
-courseRouter.post("/updaqte:id", async (req, res) => {
+courseRouter.post("/update/:id", async (req, res) => {
   coursesController.updateCourse(req, res)
 })
 
