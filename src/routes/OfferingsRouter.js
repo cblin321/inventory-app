@@ -75,7 +75,8 @@ offeringsRouter.post("/:id/add", [
 
 offeringsRouter.get("/:id/edit", async (req, res) => {
   const offering = (await offeringsController.getOne(req, res))[0];
-  res.render("./offerings/edit_offerings", { offering });
+  const id = req.params["id"]
+  res.render("./offerings/edit_offerings", { offering, id });
 });
 
 offeringsRouter.post("/:id/delete", async (req, res) => {
@@ -84,6 +85,7 @@ offeringsRouter.post("/:id/delete", async (req, res) => {
 });
 
 offeringsRouter.post("/:id/edit", [
+  //TODO get original row
   updateValidators,
   async (req, res) => {
     const results = validationResult(req);
@@ -92,8 +94,9 @@ offeringsRouter.post("/:id/edit", [
         error: "Invalid input",
         details: results.array(),
       });
-    await offeringsController.updateCourseOffering(req, res);
     const id = req.params["id"];
+
+    await offeringsController.updateCourseOffering(req, res, id)
     res.redirect(`../${id}`);
   },
 ]);
@@ -104,12 +107,12 @@ offeringsRouter.get("/:id", [
     let offerings = await offeringsController.getAllForCourse(req, res);
     offerings = offerings.map((offering) => ({
       ...offering,
-      updateURL: `/offerings/${offering.offering_id}/edit`,
-      deleteURL: `/offerings/${offering.offering_id}/delete`,
+      updateURL: `/courses/offerings/${offering.offering_id}/edit`,
+      deleteURL: `/courses/offerings/${offering.offering_id}/delete`,
     }));
     res.render("./offerings/offerings", {
       offerings,
-      addURL: `/offerings/${req.params.id}/add`,
+      addURL: `/courses/offerings/${req.params.id}/add`,
     });
   },
 ]);

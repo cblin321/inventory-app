@@ -1,8 +1,10 @@
 const { Router } = require("express");
 
 const courseRouter = Router();
-const coursesController = require("../controllers/CoursesController");
-const offeringsController = require("../controllers/OfferingsController");
+const coursesController = require("../controllers/CoursesController")
+const offeringsController = require("../controllers/OfferingsController")
+const offeringsRouter = require("./OfferingsRouter")
+courseRouter.use("/offerings", offeringsRouter)
 
 courseRouter.get("/", async (req, res) => {
   let allCourses = await coursesController.getAllCourses();

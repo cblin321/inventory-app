@@ -4,7 +4,7 @@ async function getAllCourses(req, res) {
     let getAllCoursesResult = await queries.getAllCoursesQuery()
     getAllCoursesResult = getAllCoursesResult.map((course) => ({
         ...course,
-        offeringsURL: `../offerings/${course.course_number}`,
+        offeringsURL: `/courses/offerings/${course.course_number}`,
         deleteURL: `../courses/delete/${course.course_number}`,
         updateURL: `../courses/update/${course.course_number}`,
     }));

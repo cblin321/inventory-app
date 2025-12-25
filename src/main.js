@@ -19,4 +19,3 @@ app.listen(3000, (err) => {
 
 app.use("/", indexRouter)
 app.use("/courses", courseRouter)
-app.use("/offerings", offeringRouter)

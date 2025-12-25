@@ -37,9 +37,9 @@ async function createCourseOffering(req, res) {
     await queries.createOneQuery(req.body, req.params.id)
 }
 
-async function updateCourseOffering(req, res) {
+async function updateCourseOffering(req, res, id) {
     try {
-        await queries.updateOneQuery(req.body)
+        await queries.updateOneQuery(req.body, id)
     } catch (e) {
         console.log(e.stack)
         res.status(500).json({

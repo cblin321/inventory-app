@@ -15,7 +15,7 @@
     <p><%= `Currently enrolled: ${offering.num_enrolled}`  %></p>
     <button onclick="window.location.href = '<%= offering.updateURL %>'">Update</button>
     <form method="POST" action="<%= offering.deleteURL %>">
-        <button type="submit">Delete Course</button>
+        <button type="submit">Delete Course Offering</button>
     </form>
    <% }) %>
     <button onclick="window.location.href='<%= addURL %>'">Add Course Offering</button>
