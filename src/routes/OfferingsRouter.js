@@ -68,6 +68,7 @@ offeringsRouter.post("/:id/add", [
         error: "Invalid input",
         details: results.array(),
       });
+
     await offeringsController.createCourseOffering(req, res);
     res.redirect(`../${req.params["id"]}`).status(200);
   },
@@ -80,8 +81,10 @@ offeringsRouter.get("/:id/edit", async (req, res) => {
 });
 
 offeringsRouter.post("/:id/delete", async (req, res) => {
+  const offering = (await offeringsController.getOne(req, res))[0]
+
   await offeringsController.deleteCourseOffering(req, res);
-  res.redirect(`../${req.params["id"]}`).status(200);
+  res.redirect(`../${offering.course_number}`).status(200);
 });
 
 offeringsRouter.post("/:id/edit", [
@@ -97,7 +100,9 @@ offeringsRouter.post("/:id/edit", [
     const id = req.params["id"];
 
     await offeringsController.updateCourseOffering(req, res, id)
-    res.redirect(`../${id}`);
+
+    const offering = (await offeringsController.getOne(req, res))[0]
+    res.redirect(`../${offering.course_number}`);
   },
 ]);
 

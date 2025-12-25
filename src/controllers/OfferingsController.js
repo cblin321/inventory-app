@@ -32,8 +32,6 @@ async function deleteCourseOffering(req, res) {
 }
 
 async function createCourseOffering(req, res) {
-    //TODO validation/processing
-    console.log(req.params.id)
     await queries.createOneQuery(req.body, req.params.id)
 }
 
