@@ -11,7 +11,7 @@
         <p><%= course.course_name %></p>
         <p><%= course.course_number %></p>
         <a href="<%= course.offeringsURL %>">See more</a>
-        <form action="<%= course.deleteURL %>" method="get"><button type="submit">Delete</button></form>
+        <form action="<%= course.deleteURL %>" method="post"><button type="submit">Delete</button></form>
         <form action="<%= course.updateURL %>" method="get"><button type="submit">Update</button></form>
         
     <% }) %>  

@@ -1,4 +1,5 @@
 const queries = require("../models/CourseQueries")
+
 async function getAllCourses(req, res) {
     let getAllCoursesResult = await queries.getAllCoursesQuery()
     getAllCoursesResult = getAllCoursesResult.map((course) => ({
@@ -28,7 +29,6 @@ async function addCourse(req, res) {
 
 async function updateCourse(req, res) {
     const id = req.params["id"]
-    console.log("update id" + id)
     const { course_name, course_number } = req.body
     queries.updateCourseQuery(id, course_name, course_number)
 }

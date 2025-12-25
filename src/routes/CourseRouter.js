@@ -17,15 +17,16 @@ courseRouter.get("/add", async (req, res) => {
 });
 
 courseRouter.post("/add", async (req, res) => {
-  await coursesController.addCourse(req, res);
+  await coursesController.addCourse(req, res)
   res.redirect("/courses")
 });
 
-courseRouter.get("/subjects/:id", async (req, res) => {});
+//courseRouter.get("/subjects/:id", async (req, res) => {});
 
-courseRouter.delete("/delete/:id", async (req, res) => {
+courseRouter.post("/delete/:id", async (req, res) => {
   coursesController.deleteCourse(req, res);
-});
+  res.redirect("/")
+})
 
 courseRouter.get("/update/:id", async (req, res) => {
   const id = req.params.id
@@ -36,13 +37,14 @@ courseRouter.get("/update/:id", async (req, res) => {
   console.log(id)
   res.render("./courses/edit_courses", {
     course: course[0], 
-    id: id,
+    id
   })
 
 });
 
 courseRouter.post("/update/:id", async (req, res) => {
-  coursesController.updateCourse(req, res)
+  await coursesController.updateCourse(req, res)
+  res.redirect("/")
 })
 
 courseRouter.get("/:id", async (req, res) => {

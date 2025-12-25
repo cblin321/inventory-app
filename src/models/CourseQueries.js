@@ -11,10 +11,10 @@ async function getAllCoursesQuery() {
 async function deleteCourseQuery(id) {
     const deleteSQL = `
         DELETE FROM courses
-        WHERE id = $1;
+        WHERE course_number = $1;
     `
 
-    await pool.query(deleteSQL)
+    await pool.query(deleteSQL, [id])
 }
 
 async function getOneQuery(id) {
