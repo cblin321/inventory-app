@@ -70,7 +70,7 @@ offeringsRouter.post("/:id/add", [
       });
 
     await offeringsController.createCourseOffering(req, res);
-    res.redirect(`../${req.params["id"]}`).status(200);
+    res.status(200).redirect(`../${req.params["id"]}`)
   },
 ]);
 
@@ -84,7 +84,7 @@ offeringsRouter.post("/:id/delete", async (req, res) => {
   const offering = (await offeringsController.getOne(req, res))[0]
 
   await offeringsController.deleteCourseOffering(req, res);
-  res.redirect(`../${offering.course_number}`).status(200);
+  res.status(200).redirect(`../${offering.course_number}`)
 });
 
 offeringsRouter.post("/:id/edit", [
