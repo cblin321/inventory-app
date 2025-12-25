@@ -34,7 +34,6 @@ courseRouter.get("/update/:id", async (req, res) => {
   if (course.length > 1) {
     throw new Error("duplicate courses in db")
   }
-  console.log(id)
   res.render("./courses/edit_courses", {
     course: course[0], 
     id
