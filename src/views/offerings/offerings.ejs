@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../navbar'); -%>
+
    <h1>Offerings for: <%= offerings.length > 0 ? offerings[0].course_number : "No Offerings" %></h1> 
    <% offerings.map((offering) => { %>
     <p><%= `${offering.semester} ${offering.year}`  %></p>
