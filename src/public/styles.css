@@ -1,8 +1,162 @@
-html, body {
+:root {
+  /* Colors */
+/*  --color-primary: #your-color;
+  --color-secondary: #your-color;
+  --color-accent: #your-color; */
+  --color-warning: hsl(195 12.6% 38.3%);
+  --color-accent: hsl(195 12.6% 50.3%);
+  --color-background: hsl(195 4.1% 5.5%);
+  --color-foreground: hsl(195 6.1% 8.5%);
+  --color-surface: #your-color;
+  --color-text: hsl(195 8.1% 85.3%);
+  --color-text-muted: hsl(195 10.1% 65.3%); 
+  --color-border: hsl(195 6.1% 40.2%);
+  
+  
+  /* Typography */
+  --font-family-base: sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  
+  /* Spacing Scale */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-28: 28px;
+  --space-40: 40px;
+  --space-60: 60px;
+  --space-100: 100px;
+  --space-160: 160px;
+  --space-240: 240px;
+
+  /* Borders */
+  --border-radius: 0.5rem;
+  --border-width: 1px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+@font-face {
+	font-family: 'Nunito Sans';
+	src: url('NunitoSans/NunitoSans-VariableFont_YTLC\,opsz\,wdth\,wght.ttf');
+}
+
+html, body, h1, h2, p {
   margin: 0;
   padding: 0;
 }
 
+.card-container {
+  display: grid;
+  margin-top: var(--space-40);
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
+  column-gap: var(--space-60);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-60);
+  padding-top: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Nunito Sans';
+}
+
 .card {
-  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas: 
+    "header header"
+    "sub sub"
+    "more more"
+    "delete edit";
+
+
+  border: 2px solid var(--color-border);
+  border-radius: 8px; 
+
+  padding: var(--space-28);
+  background-color: var(--color-foreground);
+}
+
+.course-name {
+  grid-area: header;
+}
+
+.course-number {
+  grid-area: sub;  
+  color: var(--color-text-muted);
+}
+
+.course-offerings {
+  color: var(--color-accent);
+  grid-area: more;
+}
+
+.course-offerings:hover {
+  cursor: pointer;
+}
+
+.course-offerings:visited {
+  color: var(--color-accent);
+}
+
+.course-btn-form {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.delete-btn {
+  border: 2px solid var(--color-warning);
+  color: var(--color-accent);
+
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0);
+  grid-area: delete;
+  width: 70%;
+}
+
+.edit-btn {
+  grid-area: edit; 
+  background-color: var(--color-accent);
+  color: var(--color-background);
+  border: none;
+  border-radius: 8px;
+  width: 70%;
+}
+
+.courses-header-container {
+  display: flex;
+  align-items: center;
+  
+  column-gap: var(--space-20);
+}
+
+.add-course {
+  border: none; 
+  border-radius: 8px;
+
+  padding: var(--space-4) var(--space-28);
+  color: var(--color-background);
+  background-color: var(--color-accent);
+  font-size: var(--font-size-base);
+}
+
+a:has(.add-course) {
+
+}
+
+nav {
+display: flex;
 }
