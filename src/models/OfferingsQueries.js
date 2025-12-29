@@ -79,11 +79,11 @@ async function updateOneQuery(body, old_id) {
   const updateOfferingSQL = `
     UPDATE offerings 
       SET offering_time_start = $1, offering_time_end = $2,
-      year = $3, semester = $4, capacity = $5, num_enrolled = $6
-      WHERE offering_id = $7;
+      year = $3, semester = $4, capacity = $5, num_enrolled = $6, course_number = $7
+      WHERE offering_id = $8;
   `;
 
-  await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, num_enrolled, old_id])
+  await pool.query(updateOfferingSQL, [ start, end, year, sem, cap, num_enrolled, course_number, old_id])
 }
 
 module.exports = {

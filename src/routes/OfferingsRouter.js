@@ -77,7 +77,8 @@ offeringsRouter.post("/:id/add", [
 offeringsRouter.get("/:id/edit", async (req, res) => {
   const offering = (await offeringsController.getOne(req, res))[0];
   const id = req.params["id"]
-  res.render("./offerings/edit_offerings", { offering, id });
+  const courses = await courseController.getAllCourses(req, res);
+  res.render("./offerings/edit_offerings", { offering, id, courses });
 });
 
 offeringsRouter.post("/:id/delete", async (req, res) => {

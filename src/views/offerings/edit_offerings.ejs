@@ -7,14 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+
   <body>
-    <h1>
-      Update Offering for <%= `${offering.course_number} ${offering.course_name} ${offering.semester}
-      ${offering.year}` %>
-    </h1>
+    <div class="header-container">
+      <h1>
+	Update Offering for <%= `${offering.course_number} ${offering.course_name} ${offering.semester}
+	${offering.year}` %>
+      </h1>
+
+      <button class="header-btn">
+	<a href="">
+	</a>
+      </button>
+    </div>
+
     <form method="POST">
       <label for="number">Course Number: </label>
-      <input required name="number" type="text" id="number" value="<%= offering.course_number  %>" />
+      <select name="course_number" id="course_number" value="<%= offering.course_number  %>">
+	<% courses.map((course) => { %>	
+	    <option 
+	      value="<%= course.course_number %>"
+	      <%= course.course_number === offering.course_number ? 'selected' : '' %>
+	    >
+
+	      <%= course.course_number %>
+	    </option>
+
+	<% }) %>
+
+      </select>
 
       <label for="start">Start Time: </label>
       <input required name="start"

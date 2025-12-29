@@ -7,14 +7,29 @@
 </head>
 <body>
   <%- include('../navbar'); -%>
+  
+    <div class="content">
 
-  <h1>Updating <%= `${course.course_number}: ${course.course_name}` %></h1>
-    <form action= <%= `/courses/update/${encodeURIComponent(id)}` %> method="POST" >
-    <input type="text" name="course_number" placeholder="Course number" value="<%= course.course_number %>">
+      <div class="header-container">
+	  <h1>Updating <%= `${course.course_number}: ${course.course_name}` %></h1>
+	  <a href="../"><button type="submit" class="header-btn">Back</button></a>
+      </div>
 
-    <input type="text" name="course_name" placeholder="Course name" value="<%= course.course_name %>">
+      <form class="course-form" action= <%= `/courses/update/${encodeURIComponent(id)}` %> method="POST" >
+	<div class="form-input-container">
+	  <div>
+	    <label for="course_number">Course Number</label>
+	    <input class="form-input" type="text" name="course_number" placeholder="Course number" value="<%= course.course_number %>">
+	  </div>
 
-    <button type="submit">Update</button>
-  </form>  
+	  <div>
+	    <label for="course_name">Course Name</label>
+	    <input class="form-input" type="text" name="course_name" placeholder="Course name" value="<%= course.course_name %>">
+	  </div>
+	</div>
+
+	<button class="submit-btn" type="submit">Update</button>
+    </form>  
+  </div>
 </body>
 </html>
