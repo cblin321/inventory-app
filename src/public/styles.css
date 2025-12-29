@@ -7,7 +7,7 @@
   --color-accent: hsl(195 12.6% 50.3%);
   --color-background: hsl(195 4.1% 5.5%);
   --color-foreground: hsl(195 6.1% 8.5%);
-  --color-surface: hsl(195 20% 60%);
+  --color-surface: hsl(195 20% 80%);
   --color-text: hsl(195 8.1% 85.3%);
   --color-text-muted: hsl(195 10.1% 55.3%); 
   --color-border: hsl(195 6.1% 40.2%);
@@ -69,6 +69,7 @@ p, button, a {
   display: grid;
   margin-top: var(--space-20);
   /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+  width: 80%;
   grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
   column-gap: var(--space-60);
 }
@@ -76,7 +77,8 @@ p, button, a {
 .content {
   display: flex;
   flex-direction: column;
-  padding: var(--space-60);
+  padding: var(--space-60) 15vw;
+  align-items: center;
   padding-top: 0;
   min-height: 100vh;
 }
@@ -156,7 +158,8 @@ body {
 .header-container {
   display: flex;
   align-items: center;
-  
+  width: 80%;
+  justify-content: flex-start;  
   column-gap: var(--space-20);
 }
 
@@ -224,6 +227,7 @@ nav .active {
   font-size: var(--font-size-lg);
   padding: var(--space-8) var(--space-20);
   width: 700px;
+  box-sizing: border-box;
 }
 
 .form-input::placeholder {
@@ -231,12 +235,12 @@ nav .active {
 }
 
 .course-form {
-  margin-top: var(--space-60);
+  margin-top: var(--space-20);
+  width: 80% !important;
 }
 
 .course-form, .form-input-container {
   margin-bottom: var(--space-40);
-  width: fit-content;
 }
 
 .course-form, .form-input-container,
@@ -250,9 +254,14 @@ nav .active {
   row-gap: var(--space-16);
 }
 
+.form-input-container, .form-input-container input,
+.form-input-container div {
+  width: 100%;
+}
+
 .submit-btn {
   background-color: var(--color-accent);
-  color: var(--color-text);
+  color: var(--color-background);
   border: none;
   border-radius: 8px;
   height: 40px;
@@ -261,3 +270,5 @@ nav .active {
   font-size: var(--font-size-base);
   align-self: flex-end;
 }
+
+
