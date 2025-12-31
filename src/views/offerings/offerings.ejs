@@ -8,18 +8,39 @@
 <body>
     <%- include('../navbar'); -%>
 
-   <h1>Offerings for: <%= offerings.length > 0 ? offerings[0].course_number : "No Offerings" %></h1> 
-   <% offerings.map((offering) => { %>
-    <p><%= `${offering.semester} ${offering.year}`  %></p>
-    <p><%= `Start time: ${offering.offering_time_start}`%></p>
-    <p><%= `End time: ${offering.offering_time_end}`  %></p>
-    <p><%= `Course capacity: ${offering.capacity}`  %></p>
-    <p><%= `Currently enrolled: ${offering.num_enrolled}`  %></p>
-    <button onclick="window.location.href = '<%= offering.updateURL %>'">Update</button>
-    <form method="POST" action="<%= offering.deleteURL %>">
-        <button type="submit">Delete Course Offering</button>
-    </form>
-   <% }) %>
-    <button onclick="window.location.href='<%= addURL %>'">Add Course Offering</button>
+    <div class="content">
+
+	<div class="header-container">
+	   <h1>Offerings for: <%= offerings.length > 0 ? offerings[0].course_number : "No Offerings" %></h1> 
+
+	    <a href="<%= addURL %>">
+		<button class="header-btn" >Add</button>
+	    </a>
+	   <a href="../">
+		    <button class="header-btn secondary-btn">
+			Back
+		    </button>
+	    </a>
+	</div>
+	<div class="center">
+	    <div class="card-container">
+		<% offerings.map((offering) => { %>
+		<div class="card offering-card">
+		    <h2 class="offering-sem"><%= `${offering.semester} ${offering.year}`  %></h2>
+		    <p class="offering-time"><%= `${offering.offering_time_start}-${offering.offering_time_end}`%></p>
+		    <p class="offering-enrolled"><b><%= `${offering.num_enrolled}/${offering.capacity} `  %></b>enrolled</p>
+
+		    <form class="course-btn-form" method="POST" action="<%= offering.deleteURL %>">
+			<button class="delete-btn" type="submit">Delete</button>
+		    </form>
+
+		    <form method="GET" action="<%= offering.updateURL %>" class="course-btn-form">
+			<button class="edit-btn" >Update</button>
+		    </form>
+		</div>
+		<% }) %>
+	    </div>
+	</div>
+    </div>
 </body>
 </html>

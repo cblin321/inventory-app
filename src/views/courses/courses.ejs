@@ -13,25 +13,27 @@
 	    <a href="<%= addURL %>"><button type="submit" class="header-btn">Add</button></a>
 	</div>
 
-	<div class="card-container">
-	      <% courses.map((course, idx) => { %>  
-	      <div class="card">
-		<h2 class="course-name"><%= course.course_name %></h2>
-		<p class="course-number"><%= course.course_number %></p>
+	<div class="center">
+		<div class="card-container">
+		    <% courses.map((course, idx) => { %>  
+		    <div class="card course-card">
+			<h2 class="course-name"><%= course.course_name %></h2>
+			<p class="course-number"><%= course.course_number %></p>
 
-		<a class="course-offerings" href="<%= course.offeringsURL %>">See course offerings</a>
+			<a class="course-offerings" href="<%= course.offeringsURL %>">See course offerings</a>
 
-	      <form class="course-btn-form" action="<%= course.deleteURL %>" method="post">
-		<button type="submit" class="delete-btn">Delete</button>
-	      </form>
+			<form class="course-btn-form" action="<%= course.deleteURL %>" method="post">
+			    <button type="submit" class="delete-btn">Delete</button>
+			</form>
 
-	      <form class="course-btn-form" action="<%= course.updateURL %>" method="get">
-		<button type="submit" class="edit-btn">Update</button>
-	      </form>
-	    </div>
+			<form class="course-btn-form" action="<%= course.updateURL %>" method="get">
+			    <button type="submit" class="edit-btn">Update</button>
+			</form>
+		    </div>
 
-	      <% }) %>  
+		    <% }) %>  
 
+		</div>
 	</div>
     </div>
 </body>
