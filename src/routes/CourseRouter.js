@@ -26,7 +26,7 @@ courseRouter.post("/add", async (req, res) => {
 //courseRouter.get("/subjects/:id", async (req, res) => {});
 
 courseRouter.post("/delete/:id", async (req, res) => {
-  coursesController.deleteCourse(req, res);
+  await coursesController.deleteCourse(req, res);
   res.redirect("/")
 })
 
