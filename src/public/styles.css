@@ -75,6 +75,10 @@ p, button, a {
   padding: var(--space-40);
 }
 
+.center:has(.course-form) {
+    min-height: auto !important;
+}
+
 .card-container {
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */ 
@@ -241,7 +245,7 @@ nav .active {
   background-color: var(--color-accent-2);
   color: var(--color-text);
   font-size: var(--font-size-lg);
-  padding: var(--space-8) var(--space-20);
+  padding: var(--space-8) var(--space-8);
   width: 700px;
   box-sizing: border-box;
 }
@@ -251,12 +255,27 @@ nav .active {
 }
 
 .course-form {
-  margin-top: var(--space-20);
-  width: 80% !important;
+    display: grid;
+    flex-direction: column;
+    column-gap: var(--space-20);
+    row-gap: var(--space-28);
 }
 
-.course-form, .form-input-container {
-  margin-bottom: var(--space-40);
+.form-row {
+    column-gap: var(--space-28);
+    flex-direction: row !important;
+    justify-content: space-between;
+}
+
+select {
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-accent-2);
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    padding: var(--space-8) var(--space-8);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .course-form, .form-input-container,
@@ -282,6 +301,7 @@ nav .active {
   border-radius: 4px;
   height: 40px;
   width: 200px;
+    align-self: flex-end;
 
   font-size: var(--font-size-base);
   align-self: flex-end;

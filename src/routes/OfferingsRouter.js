@@ -55,8 +55,8 @@ offeringsRouter.get("/", async (req, res) => {
 });
 
 offeringsRouter.get("/:id/add", async (req, res) => {
-  const course = (await courseController.getOne(req, res))[0];
-  res.render("./offerings/add_offering", { course });
+  const course = (await courseController.getOne(req, res))[0]
+  res.render("./offerings/add_offering", { course, SEMESTER_VALUES, });
 });
 
 offeringsRouter.post("/:id/add", [
@@ -78,7 +78,7 @@ offeringsRouter.get("/:id/edit", async (req, res) => {
   const offering = (await offeringsController.getOne(req, res))[0];
   const id = req.params["id"]
   const courses = await courseController.getAllCourses(req, res);
-  res.render("./offerings/edit_offerings", { offering, id, courses });
+  res.render("./offerings/edit_offerings", { offering, id, courses, SEMESTER_VALUES });
 });
 
 offeringsRouter.post("/:id/delete", async (req, res) => {

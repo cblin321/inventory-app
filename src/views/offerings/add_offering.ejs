@@ -1,35 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+
   <body>
-    <%- include('../navbar'); -%>
+      <%- include('../navbar'); -%>
+    <div class="content">
+        <div class="header-container">
+            <h1>Create offering for <%= `${course.course_number}: ${course.course_name}` %></h1>
 
-    <h1>Create offering for <%= `${course.course_number}: ${course.course_name}` %></h1>
-    <form method="POST">
+        <a href="../<%= course.course_number  %>">
+          <button class="secondary-btn header-btn">
+            Back
+          </button>
+        </a>
+        </div>
 
-      <label for="start">Start Time: </label>
-      <input required name="start" step="60" type="time" id="start" />
+        <div class="center">
+        <form class="course-form" method="POST">
+            <div class="form-input-container">
 
-      <label for="end">End Time: </label>
-      <input required name="end" step="60" type="time" id="end" />
+            <div class="form-row">
+                <div>
+                  <label for="start">Start Time </label>
+                  <input
+                    class="form-input"
+                    required name="start"
+                    step="60"
+                    type="time"
+                    id="start"
+                  />
+                </div>
 
-      <label for="year">Year: </label>
-      <input required name="year" type="text" id="year" />
+                <div>
+                  <label for="end">End Time </label>
+                  <input class="form-input" required name="end" step="60" type="time" id="end" />
+                </div>
+            </div>
 
-      <label for="sem">Semester: </label>
-      <input required name="sem" type="text" id="sem" />
+            <div class="form-row">
 
-      <label for="cap">Capacity: </label>
-      <input required name="cap" type="text" id="cap" />
+                <div>
+                  <label for="year">Year </label>
+                  <input class="form-input" required name="year" type="text" id="year"  />
+                </div>
 
-      <label for="enrolled">Students Enrolled: </label>
-      <input required name="num_enrolled" type="text" id="enrolled" />
+                <div>
+                  <label for="sem">Semester </label>
+                  <select required name="sem" id="sem">
+                    <% SEMESTER_VALUES.map((sem) => { %>	
+                        <option 
+                          value="<%= sem %>"
+                        >
 
-      <button type="submit">Create Course Offering</button>
-    </form>
+                          <%= sem %>
+                        </option>
+                    <% }) %>
+                    </select>
+                </div>
+
+        </div>
+
+        <div class="form-row">
+
+        <div>
+          <label for="cap">Capacity </label>
+          <input class="form-input" required name="cap" type="text" id="cap"/>
+    </div>
+
+        <div>
+          <label for="enrolled">Students Enrolled </label>
+          <input class="form-input" required name="num_enrolled" type="text" id="enrolled"/>
+    </div>
+</div>
+          <button class="submit-btn" type="submit">Create</button>
+        </form>
+       </div>
+    </div>
   </body>
-</html>
+</html
+

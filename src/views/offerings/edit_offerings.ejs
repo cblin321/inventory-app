@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <%- include('../navbar'); -%>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,58 +8,99 @@
   </head>
 
   <body>
-    <div class="header-container">
-      <h1>
-	Update Offering for <%= `${offering.course_number} ${offering.course_name} ${offering.semester}
-	${offering.year}` %>
-      </h1>
+      <%- include('../navbar'); -%>
+    <div class="content">
+        <div class="header-container">
+          <h1>
+        Update Offering for <%= `${offering.course_number} ${offering.course_name} ${offering.semester}
+        ${offering.year}` %>
+          </h1>
 
-      <button class="header-btn">
-	<a href="">
-	</a>
-      </button>
+        <a href="../<%= offering.course_number %>">
+          <button class="secondary-btn header-btn">
+            Back
+          </button>
+        </a>
+        </div>
+
+        <div class="center">
+        <form class="course-form" method="POST">
+            <div class="form-input-container">
+            <div>
+              <label for="number">Course Number </label>
+              <select name="course_number" id="course_number" value="<%= offering.course_number  %>">
+            <% courses.map((course) => { %>	
+                <option 
+                  value="<%= course.course_number %>"
+                  <%= course.course_number === offering.course_number ? 'selected' : '' %>
+                >
+
+                  <%= course.course_number %>
+                </option>
+
+                <% }) %>
+
+              </select>
+            </div>
+
+            <div class="form-row">
+                <div>
+                  <label for="start">Start Time </label>
+                  <input
+                    class="form-input"
+                    required name="start"
+                    step="60"
+                    type="time"
+                    id="start"
+                    value="<%= offering.offering_time_start %>"
+                  />
+                </div>
+
+                <div>
+                  <label for="end">End Time </label>
+                  <input class="form-input" required name="end" step="60" type="time" id="end" value="<%= offering.offering_time_end %>" />
+                </div>
+            </div>
+
+            <div class="form-row">
+
+                <div>
+                  <label for="year">Year </label>
+                  <input class="form-input" required name="year" type="text" id="year" value="<%= offering.year  %>" />
+                </div>
+
+                <div>
+                  <label for="sem">Semester </label>
+                  <select required name="sem" id="sem" value="<%= offering.semester  %>">
+                    <% SEMESTER_VALUES.map((sem) => { %>	
+                        <option 
+                          value="<%= sem %>"
+                          <%= sem === offering.semester ? 'selected' : '' %>
+                        >
+
+                          <%= sem %>
+                        </option>
+                    <% }) %>
+                    </select>
+                </div>
+
+        </div>
+
+        <div class="form-row">
+
+        <div>
+          <label for="cap">Capacity </label>
+          <input class="form-input" required name="cap" type="text" id="cap" value="<%= offering.capacity  %>" />
     </div>
 
-    <form method="POST">
-      <label for="number">Course Number: </label>
-      <select name="course_number" id="course_number" value="<%= offering.course_number  %>">
-	<% courses.map((course) => { %>	
-	    <option 
-	      value="<%= course.course_number %>"
-	      <%= course.course_number === offering.course_number ? 'selected' : '' %>
-	    >
-
-	      <%= course.course_number %>
-	    </option>
-
-	<% }) %>
-
-      </select>
-
-      <label for="start">Start Time: </label>
-      <input required name="start"
-        step="60"
-        type="time"
-        id="start"
-        value="<%= offering.offering_time_start %>"
-      />
-
-      <label for="end">End Time: </label>
-      <input required name="end" step="60" type="time" id="end" value="<%= offering.offering_time_end %>" />
-
-      <label for="year">Year: </label>
-      <input required name="year" type="text" id="year" value="<%= offering.year  %>" />
-
-      <label for="sem">Semester: </label>
-      <input required name="sem" type="text" id="sem" value="<%= offering.semester  %>" />
-
-      <label for="cap">Capacity: </label>
-      <input required name="cap" type="text" id="cap" value="<%= offering.capacity  %>" />
-
-      <label for="enrolled">Students Enrolled: </label>
-      <input required name="num_enrolled" type="text" id="enrolled" value="<%= offering.num_enrolled  %>" />
-
-      <button type="submit">Update Course Offering</button>
-    </form>
+        <div>
+          <label for="enrolled">Students Enrolled </label>
+          <input class="form-input" required name="num_enrolled" type="text" id="enrolled" value="<%= offering.num_enrolled  %>" />
+    </div>
+</div>
+          <button class="submit-btn" type="submit">Update Course Offering</button>
+        </form>
+       </div>
+    </div>
   </body>
-</html>
+</html
