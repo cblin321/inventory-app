@@ -3,14 +3,15 @@
 /*  --color-primary: #your-color;
   --color-secondary: #your-color;
   --color-accent: #your-color; */
-  --color-warning: hsl(195 12.6% 38.3%);
-  --color-accent: hsl(195 12.6% 50.3%);
+  --color-warning: hsl(195 30.6% 38.3%);
+  --color-accent: hsl(195 25.6% 50.3%);
   --color-background: hsl(195 4.1% 5.5%);
+  --color-fg2: hsl(195 8.1% 11.5%);
   --color-foreground: hsl(195 6.1% 8.5%);
-  --color-surface: hsl(195 20% 80%);
+  --color-surface: hsl(195 22% 80%);
   --color-text: hsl(195 8.1% 85.3%);
-  --color-text-muted: hsl(195 10.1% 55.3%); 
-  --color-border: hsl(195 6.1% 40.2%);
+  --color-text-muted: hsl(195 15.1% 55.3%); 
+  --color-border: hsl(195 10.1% 40.2%);
 
   --color-accent-2: hsl(195 23.9% 16%);
   --color-font-light: hsl(195 15.9% 90%);
@@ -72,6 +73,7 @@ p, button, a {
   margin-top: var(--space-20);
   border-radius: 8px;
   padding: var(--space-40);
+  background-color: var(--color-foreground);
 }
 
 .center:has(.course-form) {
@@ -113,7 +115,7 @@ body {
   border-radius: 8px; 
 
   padding: var(--space-28);
-  background-color: var(--color-foreground);
+  background-color: var(--color-fg2);
 
   max-width: 500px;
 }
@@ -335,6 +337,7 @@ select {
 
 .offering-enrolled {
     grid-area: enrolled;
+    margin-bottom: var(--space-12);
 }
 
 .offering-delete {
