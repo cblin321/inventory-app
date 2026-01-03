@@ -73,7 +73,6 @@ p, button, a {
   margin-top: var(--space-20);
   border-radius: 8px;
   padding: var(--space-40);
-  background-color: var(--color-foreground);
 }
 
 .center:has(.course-form) {
@@ -115,7 +114,7 @@ body {
   border-radius: 8px; 
 
   padding: var(--space-28);
-  background-color: var(--color-fg2);
+  background-color: var(--color-foreground);
 
   max-width: 500px;
 }
