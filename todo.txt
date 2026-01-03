@@ -42,14 +42,8 @@
     
 1/2/26
 
-form styling
-
-fix course form styling
-
 touch ups
-    icons
     spacing
-    narrower
 
 responsive design?
 

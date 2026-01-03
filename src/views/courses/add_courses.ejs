@@ -10,32 +10,33 @@
       <div class="content">
 
 	<div class="header-container">
-	    <h1>Add new course </h1>
+	    <h1>Creating new course </h1>
 	    <a href="../"><button type="submit" class="secondary-btn header-btn">Back</button></a>
 	</div>
 
-	  <form class="course-form" action="/courses/add/" method="POST" >
-	    <div class="form-input-container">
+    <div class="center">
+      <form class="course-form" action="/courses/add/" method="POST" >
+        <div class="form-input-container">
 
-	      <div>
-		<label for="course_number">
-		  Course Number
-		</label>
-		<input class="form-input" type="text" name="course_number" placeholder="Course number">
-	      </div>
+          <div>
+        <label for="course_number">
+          Course Number
+        </label>
+        <input class="form-input" type="text" name="course_number" placeholder="Course number">
+          </div>
 
-	      <div>
-		<label for="course_name">
-		  Course Name
-		</label>
-		<input class="form-input" type="text" name="course_name" placeholder="Course name">
-	      </div>
+          <div>
+        <label for="course_name">
+          Course Name
+        </label>
+        <input class="form-input" type="text" name="course_name" placeholder="Course name">
+          </div>
 
-	    </div>
+        </div>
 
-	    <button class="submit-btn" type="submit">Add Course</button>
+        <button class="submit-btn" type="submit">Add Course</button>
       </form>  
-
+    </div>
       </div>
 </body>
 </html>

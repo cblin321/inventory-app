@@ -11,11 +11,10 @@
       <%- include('../navbar'); -%>
     <div class="content">
         <div class="header-container">
-          <h1>
-        Update Offering for <%= `${offering.course_number} ${offering.course_name} ${offering.semester}
-        ${offering.year}` %>
-          </h1>
 
+        <h1>
+           Updating <%= `${offering.course_number} ${offering.semester} ${offering.year}` %>
+        </h1>
         <a href="../<%= offering.course_number %>">
           <button class="secondary-btn header-btn">
             Back

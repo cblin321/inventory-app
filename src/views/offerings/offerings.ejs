@@ -11,7 +11,7 @@
     <div class="content">
 
 	<div class="header-container">
-	   <h1>Offerings for: <%= offerings.length > 0 ? offerings[0].course_number : "No Offerings" %></h1> 
+	   <h1> <%= offerings.length > 0 ? offerings[0].course_number : "No" %> Offerings</h1> 
 
 	    <a href="<%= addURL %>">
 		<button class="header-btn" >Add</button>
@@ -27,8 +27,8 @@
 		<% offerings.map((offering) => { %>
 		<div class="card offering-card">
 		    <h2 class="offering-sem"><%= `${offering.semester} ${offering.year}`  %></h2>
-		    <p class="offering-time"><%= `${offering.offering_time_start}-${offering.offering_time_end}`%></p>
-		    <p class="offering-enrolled"><b><%= `${offering.num_enrolled}/${offering.capacity} `  %></b>enrolled</p>
+		    <p class="offering-time"><img class="card-subheading-icon" src="/icons/clock-regular-full.svg" alt=""><%= `${offering.offering_time_start}-${offering.offering_time_end}`%></p>
+		    <p class="offering-enrolled"><img class="card-subheading-icon" src="/icons/user-solid-full.svg" alt=""><b><%= `${offering.num_enrolled}/${offering.capacity} `  %></b>enrolled</p>
 
 		    <form class="course-btn-form" method="POST" action="<%= offering.deleteURL %>">
 			<button class="delete-btn" type="submit">Delete</button>
